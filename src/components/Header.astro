@@ -1,0 +1,243 @@
+---
+import { Image } from "astro:assets";
+import logo from "../images/logo.png";
+
+const navItems = [
+  { label: "Inicio", href: "/" },
+  { label: "Nosotros", href: "/nosotros" },
+  { label: "Productos", href: "/productos" },
+];
+
+const currentPath = Astro.url.pathname;
+---
+
+<header class="fixed inset-x-0 top-8 z-50 flex justify-center px-6">
+  <div
+    class="relative z-30 box-border flex h-17.5 w-full max-w-321 items-center justify-between gap-4 rounded-[20px] bg-black p-3 px-6 shadow-[0_8px_30px_rgba(0,0,0,0.25)] md:rounded-full md:px-3"
+  >
+    <a href="/" class="flex shrink-0 items-center gap-2 no-underline">
+      <span class="hidden leading-none md:inline-flex" aria-hidden="true">
+        <Image
+          src={logo}
+          alt="Logo de Septrum"
+          width={132}
+          densities={[1, 2]}
+        />
+      </span>
+      <span
+        class="text-[28px] leading-none font-semibold tracking-tight text-white"
+        >SEPTRUM</span
+      >
+    </a>
+
+    <nav
+      class="mx-auto hidden items-center gap-8 md:flex"
+      aria-label="Principal"
+    >
+      {
+        navItems.map((item) => (
+          <a
+            href={item.href}
+            class:list={[
+              "text-[#9a9a9a] no-underline transition-colors duration-200 hover:text-white",
+              { "text-white": currentPath === item.href },
+            ]}
+          >
+            {item.label}
+          </a>
+        ))
+      }
+    </nav>
+
+    <a href="#contacto" class="btn btn-accent hidden h-full shrink-0 md:flex">
+      Escríbenos
+    </a>
+
+    <button
+      type="button"
+      class="group flex h-4.5 w-7.5 shrink-0 cursor-pointer flex-col justify-between border-0 bg-transparent p-0 md:hidden"
+      aria-haspopup="dialog"
+      aria-controls="site-menu"
+      aria-expanded="false"
+      aria-label="Abrir menú"
+      data-menu-open-btn
+    >
+      <span
+        class="block h-0.5 w-full bg-white transition-transform duration-300 group-aria-expanded:translate-y-2 group-aria-expanded:-rotate-45"
+      ></span>
+      <span
+        class="block h-0.5 w-full bg-white transition-all duration-200 group-aria-expanded:scale-x-200 group-aria-expanded:opacity-0"
+      ></span>
+      <span
+        class="block h-0.5 w-full bg-white transition-transform duration-300 group-aria-expanded:-translate-y-2 group-aria-expanded:rotate-45"
+      ></span>
+    </button>
+  </div>
+
+  <!--
+		Manual backdrop instead of <dialog>'s native ::backdrop: a native dialog's
+		backdrop paints in the top layer, above everything on the page — including
+		this header — so its blur washed out the header bar too. This div sits in
+		the same stacking context as the bar above (z-30) but below it (z-10), so
+		the blur only ever touches the page content behind it.
+	-->
+  <div
+    data-menu-backdrop
+    aria-hidden="true"
+    class="pointer-events-none invisible fixed inset-0 z-10 bg-black/10 opacity-0 backdrop-blur-[20px] transition-[opacity,visibility] transition-discrete duration-300 open:pointer-events-auto open:visible open:opacity-100 motion-reduce:transition-none"
+  >
+  </div>
+
+  <div
+    id="site-menu"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Menú de navegación"
+    tabindex="-1"
+    class="pointer-events-none invisible fixed top-33.5 right-6 bottom-6 left-6 z-20 mx-auto flex w-auto max-w-321 -translate-y-3 scale-95 flex-col rounded-[20px] bg-black px-6 py-8 text-white opacity-0 transition-[opacity,transform,visibility] transition-discrete duration-300 ease-[cubic-bezier(0.32,1.6,0.5,1)] open:pointer-events-auto open:visible open:translate-y-0 open:scale-100 open:opacity-100 motion-reduce:transition-none md:top-[calc(16px+70px+16px)] md:right-4 md:bottom-4 md:left-4 md:hidden"
+  >
+    <nav class="flex flex-col" aria-label="Menú móvil">
+      {
+        navItems.map((item, i) => (
+          <a
+            href={item.href}
+            class="border-border-dark flex items-center justify-between border-b py-5.5 text-[1.6rem] font-semibold tracking-[0.01em] text-white no-underline first:pt-0 last-of-type:border-b-0"
+            data-menu-link
+          >
+            <span>{item.label.toUpperCase()}</span>
+            <span
+              class="text-muted-dark font-mono text-sm font-normal"
+              aria-hidden="true"
+            >
+              {String(i + 1).padStart(2, "0")}
+            </span>
+          </a>
+        ))
+      }
+    </nav>
+
+    <a
+      href="#contacto"
+      class="btn btn-accent mt-auto h-15 text-xl"
+      data-menu-link
+    >
+      Escríbenos
+    </a>
+  </div>
+</header>
+
+<script>
+  const menu = document.getElementById("site-menu");
+  const backdrop = document.querySelector<HTMLElement>("[data-menu-backdrop]");
+  const openBtn = document.querySelector<HTMLButtonElement>(
+    "[data-menu-open-btn]",
+  );
+  const header = openBtn?.closest("header") ?? null;
+
+  let isOpen = false;
+  let audioCtx: AudioContext | null = null;
+
+  function getAudioContext() {
+    if (!audioCtx) {
+      const AudioContextClass =
+        window.AudioContext || (window as any).webkitAudioContext;
+      audioCtx = new AudioContextClass();
+    }
+    if (audioCtx.state === "suspended") audioCtx.resume();
+    return audioCtx;
+  }
+
+  function playTone({
+    start,
+    end,
+    duration,
+    volume,
+  }: {
+    start: number;
+    end: number;
+    duration: number;
+    volume: number;
+  }) {
+    try {
+      const ctx = getAudioContext();
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = "sine";
+      osc.frequency.setValueAtTime(start, ctx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(
+        end,
+        ctx.currentTime + duration,
+      );
+      gain.gain.setValueAtTime(volume, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + duration);
+      osc.connect(gain).connect(ctx.destination);
+      osc.start();
+      osc.stop(ctx.currentTime + duration);
+    } catch {
+      // Web Audio unavailable — fail silently, sound is decorative only
+    }
+  }
+
+  // Plain <div>s instead of <dialog> means we own open/close state, focus,
+  // Escape handling, and hiding the rest of the page from assistive tech
+  // ourselves — none of that comes for free anymore.
+
+  function setBackgroundInert(inert: boolean) {
+    for (const el of Array.from(document.body.children)) {
+      if (el !== header) (el as HTMLElement).inert = inert;
+    }
+  }
+
+  function openMenu() {
+    if (!menu || isOpen) return;
+    isOpen = true;
+    menu.toggleAttribute("open", true);
+    backdrop?.toggleAttribute("open", true);
+    openBtn?.setAttribute("aria-expanded", "true");
+    document.documentElement.style.overflow = "hidden";
+    setBackgroundInert(true);
+    playTone({ start: 520, end: 780, duration: 0.13, volume: 0.15 });
+    // .focus() forces a synchronous style/layout flush. Called on an element
+    // inside the very subtree we just changed, it collapses the "before" and
+    // "after" frames into one before the browser paints the closed state, so
+    // the open transition has nothing to animate from. Defer it a frame.
+    requestAnimationFrame(() => {
+      menu.querySelector<HTMLElement>("a")?.focus();
+    });
+  }
+
+  function closeMenu() {
+    if (!menu || !isOpen) return;
+    isOpen = false;
+    menu.toggleAttribute("open", false);
+    backdrop?.toggleAttribute("open", false);
+    openBtn?.setAttribute("aria-expanded", "false");
+    document.documentElement.style.overflow = "";
+    setBackgroundInert(false);
+    playTone({ start: 640, end: 380, duration: 0.1, volume: 0.15 });
+    requestAnimationFrame(() => {
+      openBtn?.focus();
+    });
+  }
+
+  openBtn?.addEventListener("click", () => {
+    if (isOpen) {
+      closeMenu();
+    } else {
+      openMenu();
+    }
+  });
+
+  backdrop?.addEventListener("click", closeMenu);
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && isOpen) closeMenu();
+  });
+
+  // Close menu when a nav link or the CTA is clicked
+  menu
+    ?.querySelectorAll<HTMLAnchorElement>("[data-menu-link]")
+    .forEach((link) => {
+      link.addEventListener("click", closeMenu);
+    });
+</script>

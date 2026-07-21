@@ -1,17 +1,31 @@
 ---
-
+import BaseLayout from "../layouts/base.astro";
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout title="Septrum — Filtros UV de agua industrial">
+  <section
+    class="mx-auto flex max-w-321 flex-col gap-5 px-6 pt-16 pb-24 md:gap-7 md:pt-24 md:pb-32"
+  >
+    <p class="text-green font-mono text-sm tracking-wider uppercase">
+      Tratamiento de aguas industriales — Arequipa, Perú
+    </p>
+    <h1
+      class="max-w-xl text-[42px] leading-none tracking-tight text-balance text-black md:text-[64px]"
+    >
+      Filtros <strong class="text-green font-semibold"><em>UV</em></strong> de agua
+      para tu empresa
+    </h1>
+    <p
+      class="text-muted max-w-xl text-lg leading-relaxed font-light md:text-xl"
+    >
+      Fabricamos e importamos <strong class="font-medium text-black"
+        >sensores, medición de flujo, sistemas UV, filtración y válvulas</strong
+      > de grado industrial. Equipos certificados para el tratamiento de aguas en
+      tu proceso.
+    </p>
+    <div class="flex flex-col gap-2 md:flex-row md:items-center">
+      <a href="/productos" class="btn btn-primary">Ver productos</a>
+      <a href="#contacto" class="btn btn-secondary">Contáctanos</a>
+    </div>
+  </section>
+</BaseLayout>

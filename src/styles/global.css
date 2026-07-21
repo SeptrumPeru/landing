@@ -1,0 +1,100 @@
+@import "tailwindcss";
+
+@theme {
+  --color-lime: #bee100;
+  --color-green: #00a827;
+  --color-black: #090f0c;
+  --color-white: #fafafa;
+  --color-bg: #f6f6f3;
+  --color-muted: #57635d;
+  --color-border: #e0e0d4;
+  --color-border-dark: #333333;
+  --color-muted-dark: #999999;
+
+  --font-mono: "Google Sans Code", ui-monospace, SFMono-Regular, monospace;
+}
+
+@layer base {
+  body {
+    background: var(--color-bg);
+    font-family: "Google Sans Flex", ui-sans-serif, system-ui, sans-serif;
+    font-variation-settings: "GRAD" 0;
+    padding-top: 134px;
+  }
+}
+
+@layer components {
+  /* Shared shape/type for every button; bg + text color come from a
+     .btn-accent / .btn-primary / .btn-secondary modifier alongside it. */
+  .btn {
+    @apply relative inline-flex items-center justify-center overflow-hidden rounded-full px-7 pt-3.5 pb-3 text-[0.9rem] font-medium tracking-[0.02em] whitespace-nowrap uppercase no-underline;
+    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .btn::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      115deg,
+      transparent 30%,
+      rgb(255 255 255 / 0.55) 45%,
+      rgb(255 255 255 / 0.55) 55%,
+      transparent 70%
+    );
+    transform: translateX(-120%);
+    transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .btn:hover {
+    transform: scale(1.035);
+  }
+
+  .btn:hover::after {
+    transform: translateX(120%);
+  }
+
+  .btn:active {
+    transform: translateY(-1px) scale(0.98);
+    transition-duration: 0.15s;
+  }
+
+  /* Accent — the lime CTA (header, mobile menu) */
+  .btn-accent {
+    @apply bg-lime text-black;
+  }
+
+  /* Primary — main on-page action */
+  .btn-primary {
+    @apply bg-green text-white;
+  }
+
+  /* Secondary — outline; the diagonal sheen reads oddly on a transparent
+     fill, so it gets its own hover treatment: border fills solid instead. */
+  .btn-secondary {
+    @apply border border-black/15 bg-transparent text-black;
+    transition:
+      transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+      background-color 0.35s ease,
+      border-color 0.35s ease,
+      color 0.35s ease;
+  }
+
+  .btn-secondary::after {
+    content: none;
+  }
+
+  .btn-secondary:hover {
+    background-color: var(--color-black);
+    border-color: var(--color-black);
+    color: var(--color-white);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .btn,
+    .btn::after,
+    .btn-secondary {
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
