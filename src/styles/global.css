@@ -23,11 +23,85 @@
   }
 }
 
+@layer utilities {
+  .mwx {
+    @apply mx-auto max-w-321;
+  }
+
+  /* Floating drift for the hero's stacked color cards — translate stays
+     independent of Tailwind's own rotate property, so the tilt is untouched. */
+  .animate-float-a {
+    animation: float-a 5s ease-in-out infinite;
+  }
+
+  .animate-float-b {
+    animation: float-b 7s ease-in-out infinite;
+    animation-delay: -2s;
+  }
+
+  .animate-float-c {
+    animation: float-c 6s ease-in-out infinite;
+    animation-delay: -3.5s;
+  }
+
+  .animate-float-d {
+    animation: float-d 8s ease-in-out infinite;
+    animation-delay: -4.5s;
+  }
+}
+
+@keyframes float-a {
+  0%,
+  100% {
+    translate: 0 0;
+  }
+  50% {
+    translate: 0 -6%;
+  }
+}
+
+@keyframes float-b {
+  0%,
+  100% {
+    translate: 0 0;
+  }
+  50% {
+    translate: 0 6%;
+  }
+}
+
+@keyframes float-c {
+  0%,
+  100% {
+    translate: 0 0;
+  }
+  50% {
+    translate: -3% -5%;
+  }
+}
+
+@keyframes float-d {
+  0%,
+  100% {
+    translate: 0 0;
+  }
+  50% {
+    translate: 2% -5%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-float-a,
+  .animate-float-b,
+  .animate-float-c,
+  .animate-float-d {
+    animation: none;
+  }
+}
+
 @layer components {
-  /* Shared shape/type for every button; bg + text color come from a
-     .btn-accent / .btn-primary / .btn-secondary modifier alongside it. */
   .btn {
-    @apply relative inline-flex items-center justify-center overflow-hidden rounded-full px-7 pt-3.5 pb-3 text-[0.9rem] font-medium tracking-[0.02em] whitespace-nowrap uppercase no-underline;
+    @apply relative inline-flex items-center justify-center overflow-hidden rounded-full px-7 pt-4.5 pb-4 text-center leading-5 font-medium uppercase no-underline;
     transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
@@ -72,7 +146,7 @@
   /* Secondary — outline; the diagonal sheen reads oddly on a transparent
      fill, so it gets its own hover treatment: border fills solid instead. */
   .btn-secondary {
-    @apply border border-black/15 bg-transparent text-black;
+    @apply border-2 border-black/15 bg-transparent pt-4 pb-3.5 text-black;
     transition:
       transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
       background-color 0.35s ease,
@@ -88,6 +162,51 @@
     background-color: var(--color-black);
     border-color: var(--color-black);
     color: var(--color-white);
+  }
+
+  .footer-link {
+    @apply relative block overflow-x-clip transition-colors duration-300 hover:text-white;
+
+    &::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -2px;
+      width: 100%;
+      height: 1px;
+      background: currentColor;
+      transform: translateX(-105%);
+      transition: transform 300ms ease;
+    }
+
+    &:hover::after {
+      transform: translateX(0);
+    }
+  }
+
+  .highlight-link {
+    @apply relative z-1 flex items-center gap-2 px-2 py-1 pr-4 text-black transition-colors duration-150 hover:text-white;
+
+    &::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: black;
+      transform: scaleX(0);
+      transform-origin: left;
+      transition:
+        transform 150ms ease,
+        opacity 150ms ease;
+      z-index: -1;
+    }
+
+    &:hover::before {
+      transform: scaleX(1);
+    }
+
+    &:not(:hover)::before {
+      transform-origin: right;
+    }
   }
 
   @media (prefers-reduced-motion: reduce) {
