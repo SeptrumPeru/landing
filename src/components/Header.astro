@@ -14,7 +14,7 @@ const currentPath = Astro.url.pathname;
 
 <header class="fixed inset-x-0 top-8 z-50 flex justify-center px-6">
   <div
-    class="relative z-30 box-border flex h-17.5 w-full max-w-321 items-center justify-between gap-4 rounded-[20px] bg-black p-3 px-6 shadow-[0_8px_30px_rgba(0,0,0,0.25)] md:rounded-full md:px-3"
+    class="relative z-30 box-border flex h-17.5 w-full max-w-321 items-center justify-between gap-4 rounded-[20px] bg-black p-3 px-6 shadow-[0_8px_30px_rgba(50,205,50,0.2)] md:rounded-full md:px-3"
   >
     <a href="/" class="flex shrink-0 items-center gap-2 no-underline">
       <span class="hidden leading-none md:inline-flex" aria-hidden="true">
@@ -197,7 +197,7 @@ const currentPath = Astro.url.pathname;
     openBtn?.setAttribute("aria-expanded", "true");
     document.documentElement.style.overflow = "hidden";
     setBackgroundInert(true);
-    playTone({ start: 520, end: 780, duration: 0.13, volume: 0.15 });
+    playTone({ start: 520, end: 780, duration: 0.13, volume: 0.2 });
     // .focus() forces a synchronous style/layout flush. Called on an element
     // inside the very subtree we just changed, it collapses the "before" and
     // "after" frames into one before the browser paints the closed state, so
@@ -215,7 +215,7 @@ const currentPath = Astro.url.pathname;
     openBtn?.setAttribute("aria-expanded", "false");
     document.documentElement.style.overflow = "";
     setBackgroundInert(false);
-    playTone({ start: 640, end: 380, duration: 0.1, volume: 0.15 });
+    playTone({ start: 640, end: 380, duration: 0.1, volume: 0.2 });
     requestAnimationFrame(() => {
       openBtn?.focus();
     });
