@@ -17,6 +17,10 @@
 }
 
 @layer base {
+  :root,
+  html {
+    scroll-behavior: smooth;
+  }
   body {
     background: var(--color-bg);
     font-family: "Google Sans Flex", ui-sans-serif, system-ui, sans-serif;
@@ -199,6 +203,15 @@
 [data-reveal].is-visible {
   opacity: 1;
   transform: translateY(0);
+}
+
+.neumorphic-header {
+  background: #090f0c;
+
+  box-shadow:
+    -4px -4px 10px rgba(255, 255, 255, 0.03),
+    8px 8px 20px rgba(0, 0, 0, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
 }
 
 @media (prefers-reduced-motion: reduce) {
