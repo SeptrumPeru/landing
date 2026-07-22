@@ -12,6 +12,8 @@
   --color-muted-dark: #999999;
 
   --font-mono: "Google Sans Code", ui-monospace, SFMono-Regular, monospace;
+
+  --radius-base: 20px;
 }
 
 @layer base {
@@ -27,26 +29,37 @@
   .mwx {
     @apply mx-auto max-w-321;
   }
-
-  /* Floating drift for the hero's stacked color cards — translate stays
-     independent of Tailwind's own rotate property, so the tilt is untouched. */
   .animate-float-a {
     animation: float-a 5s ease-in-out infinite;
   }
-
   .animate-float-b {
     animation: float-b 7s ease-in-out infinite;
     animation-delay: -2s;
   }
-
   .animate-float-c {
     animation: float-c 6s ease-in-out infinite;
     animation-delay: -3.5s;
   }
-
   .animate-float-d {
     animation: float-d 8s ease-in-out infinite;
     animation-delay: -4.5s;
+  }
+  .animate-phone {
+    animation: phone 1s linear infinite both;
+  }
+}
+
+@keyframes phone {
+  0%,
+  50%,
+  100% {
+    rotate: 0;
+  }
+  25% {
+    rotate: -20deg;
+  }
+  75% {
+    rotate: 15deg;
   }
 }
 
@@ -96,6 +109,103 @@
   .animate-float-c,
   .animate-float-d {
     animation: none;
+  }
+}
+
+/* Mobile nav — plain CSS rather than Tailwind's discrete-transition utilities,
+   which weren't rendering a visible entrance. Position/z-index/background
+   stay as Tailwind classes on the elements; this only owns the motion. */
+.site-menu-backdrop {
+  pointer-events: none;
+  visibility: hidden;
+  opacity: 0;
+  transition:
+    opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    visibility 0s linear 0.4s;
+}
+
+.site-menu-backdrop[open] {
+  pointer-events: auto;
+  visibility: visible;
+  opacity: 1;
+  transition:
+    opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    visibility 0s linear 0s;
+}
+
+.site-menu {
+  pointer-events: none;
+  visibility: hidden;
+  opacity: 0;
+  transform: translateY(-16px) scale(0.94);
+  filter: blur(10px);
+  transition:
+    opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+    filter 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+    visibility 0s linear 0.45s;
+}
+
+.site-menu[open] {
+  pointer-events: auto;
+  visibility: visible;
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  filter: blur(0);
+  transition:
+    opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.55s cubic-bezier(0.16, 1, 0.3, 1),
+    filter 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+    visibility 0s linear 0s;
+}
+
+.site-menu [data-menu-link] {
+  opacity: 0;
+  transform: translateY(16px);
+  transition:
+    opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.site-menu[open] [data-menu-link] {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: calc(var(--i, 0) * 60ms + 150ms);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-menu-backdrop,
+  .site-menu,
+  .site-menu [data-menu-link] {
+    transition-duration: 0.01ms !important;
+  }
+
+  .site-menu {
+    filter: none !important;
+  }
+}
+
+/* Scroll reveal — AOS-style fade/rise, applied via IntersectionObserver
+   toggling .is-visible. --i (set inline per item) staggers groups of cards. */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  transition-delay: calc(var(--i, 0) * 90ms);
+}
+
+[data-reveal].is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal] {
+    transition: none;
+    opacity: 1;
+    transform: none;
   }
 }
 

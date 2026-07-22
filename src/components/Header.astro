@@ -14,7 +14,7 @@ const currentPath = Astro.url.pathname;
 
 <header class="fixed inset-x-0 top-8 z-50 flex justify-center px-6">
   <div
-    class="relative z-30 box-border flex h-17.5 w-full max-w-321 items-center justify-between gap-4 rounded-[20px] bg-black p-3 px-6 shadow-[0_8px_30px_rgba(50,205,50,0.2)] md:rounded-full md:px-3"
+    class="rounded-base relative z-30 box-border flex h-17.5 w-full max-w-321 items-center justify-between gap-4 bg-black p-3 px-6 shadow-[0_0px_30px_rgba(190,225,0,0.2)] md:rounded-full md:px-3"
   >
     <a href="/" class="flex shrink-0 items-center gap-2 no-underline">
       <span class="hidden leading-none md:inline-flex" aria-hidden="true">
@@ -83,7 +83,7 @@ const currentPath = Astro.url.pathname;
   <div
     data-menu-backdrop
     aria-hidden="true"
-    class="pointer-events-none invisible fixed inset-0 z-10 bg-black/10 opacity-0 backdrop-blur-[20px] transition-[opacity,visibility] transition-discrete duration-300 open:pointer-events-auto open:visible open:opacity-100 motion-reduce:transition-none"
+    class="site-menu-backdrop fixed inset-0 z-10 bg-black/10 backdrop-blur-[20px]"
   >
   </div>
 
@@ -93,13 +93,14 @@ const currentPath = Astro.url.pathname;
     aria-modal="true"
     aria-label="Menú de navegación"
     tabindex="-1"
-    class="mwx pointer-events-none invisible fixed top-33.5 right-6 bottom-6 left-6 z-20 flex w-auto -translate-y-3 scale-95 flex-col rounded-[20px] bg-black px-6 py-8 text-white opacity-0 transition-[opacity,transform,visibility] transition-discrete duration-300 ease-[cubic-bezier(0.32,1.6,0.5,1)] open:pointer-events-auto open:visible open:translate-y-0 open:scale-100 open:opacity-100 motion-reduce:transition-none md:top-[calc(16px+70px+16px)] md:right-4 md:bottom-4 md:left-4 md:hidden"
+    class="site-menu mwx rounded-base fixed top-33.5 right-6 bottom-6 left-6 z-20 flex w-auto flex-col bg-black px-6 py-8 text-white md:top-[calc(16px+70px+16px)] md:right-4 md:bottom-4 md:left-4 md:hidden"
   >
     <nav class="flex flex-col" aria-label="Menú móvil">
       {
         navItems.map((item, i) => (
           <a
             href={item.href}
+            style={{ "--i": i }}
             class="border-border-dark flex items-center justify-between border-b py-5.5 text-[1.6rem] font-semibold tracking-[0.01em] text-white no-underline first:pt-0 last-of-type:border-b-0"
             data-menu-link
           >
@@ -119,6 +120,7 @@ const currentPath = Astro.url.pathname;
       href={WHATSAPP_URL}
       target="_blank"
       rel="noreferrer noopener"
+      style={{ "--i": navItems.length }}
       class="btn btn-accent mt-auto h-15 text-xl"
       data-menu-link
     >

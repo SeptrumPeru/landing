@@ -6,38 +6,57 @@ import { WHATSAPP_URL } from "../lib/constants";
 import heroPhoto from "../images/hero-photo.png";
 import ctaBg from "../images/cta-bg.jpg";
 import testimonialPhoto from "../images/testimonial-photo.png";
+import categorySensor from "../images/category-sensor.jpg";
+import categoryFlow from "../images/category-flow.jpg";
+import categoryFilter from "../images/category-filter.jpg";
+import categoryUv from "../images/category-uv.jpg";
+import categoryValve from "../images/category-valve.jpg";
+import categoryAccessory from "../images/category-accessory.jpg";
 import Arrow from "../components/Arrow.astro";
+import Category from "../components/Category.astro";
 
 const categories = [
   {
     name: "Sensores e Instrumentación",
     description:
       "Sensores de pH, ORP, oxígeno disuelto, conductividad y temperatura para monitoreo en línea y otros usos.",
+    href: "/productos",
+    image: categorySensor,
   },
   {
     name: "Medición de Flujo",
     description:
       "Caudalímetros y sensores de flujo para control preciso en procesos industriales.",
+    href: "/productos",
+    image: categoryFlow,
   },
   {
     name: "Filtración",
     description:
       "Filtros industriales para sólidos, sedimentos y partículas en sistemas de agua para uso humano e industrial.",
+    href: "/productos",
+    image: categoryFilter,
   },
   {
     name: "Sistemas UV",
     description:
       "Equipos de desinfección ultravioleta para tratamiento seguro y eficiente del agua.",
+    href: "/productos",
+    image: categoryUv,
   },
   {
     name: "Válvulas",
     description:
       "Válvulas industriales para control y regulación de flujo en procesos hidráulicos.",
+    href: "/productos",
+    image: categoryValve,
   },
   {
     name: "Accesorios y Repuestos",
     description:
       "Componentes y repuestos originales para mantenimiento y optimización de equipos.",
+    href: "/productos",
+    image: categoryAccessory,
   },
 ];
 
@@ -90,11 +109,10 @@ const testimonios = [
       class="mwx flex flex-col gap-10 pt-0 pb-16 md:flex-row-reverse md:items-center md:justify-between md:gap-12 md:pb-14"
     >
       <div
-        class="relative mx-auto w-full max-w-[657px] shrink-0 md:mx-0 md:w-[380px] lg:w-[500px] xl:w-[657px]"
-        style="aspect-ratio: 657 / 579;"
+        class="relative mx-auto aspect-4/3 w-full shrink-0 md:mx-0 md:aspect-657/579 md:w-95 lg:w-125 xl:w-164.25"
       >
         <div
-          class="absolute flex items-center justify-center"
+          class="absolute hidden items-center justify-center md:flex"
           style="left: 37.06%; top: 69.43%; width: 35.92%; height: 30.58%;"
         >
           <div
@@ -104,7 +122,7 @@ const testimonios = [
           </div>
         </div>
         <div
-          class="absolute flex items-center justify-center"
+          class="absolute hidden items-center justify-center md:flex"
           style="left: 48.39%; top: 0%; width: 51.61%; height: 92.55%;"
         >
           <div
@@ -114,7 +132,7 @@ const testimonios = [
           </div>
         </div>
         <div
-          class="absolute flex items-center justify-center"
+          class="absolute hidden items-center justify-center md:flex"
           style="left: 5.94%; top: 14.34%; width: 66.99%; height: 63.86%;"
         >
           <div
@@ -124,12 +142,10 @@ const testimonios = [
           </div>
         </div>
         <div
-          class="absolute flex items-center justify-center"
-          style="left: 0%; top: 20.39%; width: 66.99%; height: 63.86%;"
+          class="absolute inset-0 flex items-center justify-center md:inset-auto md:left-0 md:top-[20.39%] md:h-[63.86%] md:w-[66.99%]"
         >
           <div
-            class="animate-float-d rotate-2 overflow-hidden rounded-[28px] lg:rounded-[36px]"
-            style="width: 97.24%; height: 96.02%;"
+            class="animate-float-d h-full w-full overflow-hidden rounded-[28px] md:h-[96.02%] md:w-[97.24%] md:rotate-2 lg:rounded-[36px]"
           >
             <Image
               src={heroPhoto}
@@ -176,15 +192,18 @@ const testimonios = [
 
     <section class="mwx pb-16 md:pb-24">
       <div
-        class="bg-lime flex flex-col gap-8 rounded-4xl px-8 py-10 text-black md:flex-row md:items-center md:justify-between md:rounded-[48px] md:px-12 md:py-16"
+        data-reveal
+        class="bg-lime rounded-base flex flex-col gap-8 px-8 py-10 text-black md:flex-row md:items-center md:justify-between md:rounded-[48px] md:px-12 md:py-16"
       >
         <p
-          class="max-w-xl text-[32px] leading-none text-balance md:text-[48px]"
+          class="max-w-xl text-end text-[36px] leading-none text-balance md:text-start md:text-[48px]"
         >
           Fabricamos e importamos productos de calidad
         </p>
-        <div class="flex gap-10 whitespace-nowrap md:gap-12">
-          <div class="flex flex-col">
+        <div
+          class="grid grid-cols-2 justify-items-center gap-0 whitespace-nowrap md:flex md:gap-12"
+        >
+          <div class="flex flex-col items-center">
             <span
               class="font-mono text-[40px] leading-none md:text-[60px]"
               data-count-to="35"
@@ -192,7 +211,7 @@ const testimonios = [
             >
             <span class="mt-1 text-lg md:text-2xl">Productos</span>
           </div>
-          <div class="flex flex-col">
+          <div class="flex flex-col items-center">
             <span
               class="font-mono text-[40px] leading-none md:text-[60px]"
               data-count-to="2022">0</span
@@ -205,6 +224,7 @@ const testimonios = [
 
     <section class="mwx flex flex-col gap-12 pb-24 md:gap-12 md:pb-32">
       <div
+        data-reveal
         class="flex flex-col gap-6 md:flex-row md:items-end md:justify-between"
       >
         <div class="flex flex-col gap-5 md:max-w-xl md:gap-7">
@@ -227,15 +247,9 @@ const testimonios = [
         class="grid grid-cols-1 gap-x-8 gap-y-10 sm:grid-cols-2 md:grid-cols-3"
       >
         {
-          categories.map((category) => (
-            <div class="flex flex-col gap-4">
-              <div class="bg-border aspect-[7/4] rounded-[20px]" />
-              <div class="flex flex-col gap-2">
-                <h3 class="text-xl font-semibold tracking-tight text-black">
-                  {category.name}
-                </h3>
-                <p class="text-muted">{category.description}</p>
-              </div>
+          categories.map((category, i) => (
+            <div data-reveal style={{ "--i": i % 3 }}>
+              <Category category={category} />
             </div>
           ))
         }
@@ -247,7 +261,7 @@ const testimonios = [
     <div
       class="mwx flex flex-col gap-16 md:flex-row md:items-center md:justify-between md:gap-12"
     >
-      <div class="flex flex-col gap-5 md:max-w-xl md:gap-7">
+      <div data-reveal class="flex flex-col gap-5 md:max-w-xl md:gap-7">
         <p class="text-lime font-mono text-sm tracking-wider uppercase">
           Por qué Septrum
         </p>
@@ -274,7 +288,7 @@ const testimonios = [
         {
           motivos.map((motivo, i) => (
             <>
-              <div class="flex items-center gap-4">
+              <div data-reveal style={{ "--i": i }} class="flex items-center gap-4">
                 <span class="text-lime font-mono text-sm tracking-wider uppercase">
                   {motivo.number}
                 </span>
@@ -295,7 +309,7 @@ const testimonios = [
 
   <article class="px-6">
     <section class="mwx flex flex-col gap-12 pt-24 pb-24 md:pt-32 md:pb-32">
-      <div class="flex flex-col gap-5 md:max-w-xl md:gap-7">
+      <div data-reveal class="flex flex-col gap-5 md:max-w-xl md:gap-7">
         <p class="text-green font-mono text-sm tracking-wider uppercase">
           Clientes
         </p>
@@ -310,13 +324,17 @@ const testimonios = [
         <div class="flex flex-col gap-8 lg:w-2/3">
           <div class="grid grid-cols-1 gap-8 md:grid-cols-2">
             {
-              testimonios.slice(0, 2).map((t) => (
-                <div class="bg-green flex flex-col justify-between gap-8 rounded-[36px] p-8">
+              testimonios.slice(0, 2).map((t, i) => (
+                <div
+                  data-reveal
+                  style={{ "--i": i }}
+                  class="bg-green flex flex-col justify-between gap-8 rounded-[36px] p-8"
+                >
                   <div class="flex flex-col gap-6">
                     <svg
                       viewBox="0 0 69 51"
                       fill="none"
-                      class="h-[38px] w-[51px] text-white"
+                      class="h-9.5 w-12.75 text-white"
                       xmlns="http://www.w3.org/2000/svg"
                     >
                       <path
@@ -324,32 +342,36 @@ const testimonios = [
                         fill="currentColor"
                       />
                     </svg>
-                    <p class="font-medium text-white">“{t.quote}”</p>
+                    <p class="text-white md:text-lg">“{t.quote}”</p>
                   </div>
                   <div class="flex flex-col">
                     <p class="font-medium text-white">{t.role}</p>
-                    <p class="text-sm font-light text-[#e0e0d4]">{t.company}</p>
+                    <p class="text-border text-sm font-light">{t.company}</p>
                   </div>
                 </div>
               ))
             }
           </div>
 
-          <div class="bg-green flex flex-col gap-6 rounded-[36px] p-8">
+          <div
+            data-reveal
+            style={{ "--i": 2 }}
+            class="bg-green flex flex-col gap-6 rounded-[36px] p-8"
+          >
             <svg
               viewBox="0 0 69 51"
               fill="none"
-              class="h-[38px] w-[51px] text-white"
+              class="h-9.5 w-12.75 text-white"
               xmlns="http://www.w3.org/2000/svg"
             >
               <path
                 d="M69 7.7117L58.8621 22.3125C61.4138 23.1351 63.6207 24.7803 65.4828 27.248C67.4138 29.6472 68.3793 32.5262 68.3793 35.8851C68.3793 40.2036 66.931 43.8024 64.0345 46.6815C61.1379 49.5605 57.4138 51 52.8621 51C48.4483 51 44.7586 49.5605 41.7931 46.6815C38.8966 43.8024 37.4483 40.2036 37.4483 35.8851C37.4483 33.3488 37.931 30.8811 38.8966 28.4819C39.931 26.0827 41.6897 23.0665 44.1724 19.4335L57.5172 0C57.5172 0 61.3448 2.57057 69 7.7117ZM31.5517 7.7117L21.4138 22.3125C23.8966 23.1351 26.1034 24.7803 28.0345 27.248C29.9655 29.6472 30.931 32.5262 30.931 35.8851C30.931 40.2036 29.4828 43.8024 26.5862 46.6815C23.6897 49.5605 19.9655 51 15.4138 51C10.931 51 7.24138 49.5605 4.34483 46.6815C1.44828 43.8024 0 40.2036 0 35.8851C0 33.3488 0.482759 30.8811 1.44828 28.4819C2.48276 26.0827 4.24138 23.0665 6.72414 19.4335L20.069 0C20.069 0 23.8966 2.57057 31.5517 7.7117Z"
                 fill="currentColor"></path>
             </svg>
-            <p class="font-medium text-white">“{testimonios[2].quote}”</p>
+            <p class="text-white md:text-lg">“{testimonios[2].quote}”</p>
             <div class="flex flex-col">
               <p class="font-medium text-white">{testimonios[2].role}</p>
-              <p class="text-sm font-light text-[#e0e0d4]">
+              <p class="text-border text-sm font-light">
                 {testimonios[2].company}
               </p>
             </div>
@@ -357,6 +379,7 @@ const testimonios = [
         </div>
 
         <div
+          data-reveal
           class="relative hidden overflow-hidden rounded-[36px] lg:block lg:w-1/3"
         >
           <Image
@@ -366,7 +389,7 @@ const testimonios = [
             height={432}
             densities={[1, 2]}
             data-parallax
-            class="absolute inset-x-0 -top-[10%] h-[120%] w-full object-cover"
+            class="absolute inset-x-0 -top-[15%] h-[130%] w-full object-cover"
           />
         </div>
       </div>
@@ -374,6 +397,7 @@ const testimonios = [
 
     <section class="mwx pb-24 md:pb-32">
       <div
+        data-reveal
         class="relative flex flex-col items-center gap-6 overflow-hidden rounded-4xl px-8 py-16 text-center md:items-start md:rounded-[48px] md:px-12 md:py-24 md:text-start"
       >
         <Image
@@ -469,7 +493,7 @@ const testimonios = [
         if (!parent) return;
         const rect = parent.getBoundingClientRect();
         const centerOffset = rect.top + rect.height / 2 - viewportH / 2;
-        const shift = Math.max(-40, Math.min(40, centerOffset * -0.08));
+        const shift = Math.max(-70, Math.min(70, centerOffset * -0.15));
         el.style.transform = `translateY(${shift}px)`;
       });
       ticking = false;
@@ -484,5 +508,25 @@ const testimonios = [
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onScroll);
     updateParallax();
+  }
+
+  // Scroll reveal — AOS-style fade/rise for section blocks and cards.
+  const revealEls = document.querySelectorAll<HTMLElement>("[data-reveal]");
+
+  if (prefersReducedMotion) {
+    revealEls.forEach((el) => el.classList.add("is-visible"));
+  } else {
+    const revealObserver = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (!entry.isIntersecting) continue;
+          entry.target.classList.add("is-visible");
+          revealObserver.unobserve(entry.target);
+        }
+      },
+      { threshold: 0.15, rootMargin: "0px 0px -10% 0px" },
+    );
+
+    revealEls.forEach((el) => revealObserver.observe(el));
   }
 </script>

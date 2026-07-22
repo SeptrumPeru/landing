@@ -1,7 +1,7 @@
 ---
 import { Image } from "astro:assets";
 import logo from "../images/logo_bn.png";
-import { Mail, MapPinned, Phone } from "@lucide/astro";
+import { Mail, MapPinned, Phone, PhoneCall } from "@lucide/astro";
 import { WHATSAPP_URL } from "../lib/constants";
 ---
 
@@ -13,11 +13,9 @@ import { WHATSAPP_URL } from "../lib/constants";
 <footer class="text-muted-dark bg-black px-6">
   <section class="mwx grid gap-8 py-16 md:grid-cols-3">
     <article class="flex flex-col gap-6">
-      <h2
-        class="flex flex-col items-start gap-2 text-3xl font-bold text-neutral-50"
-      >
-        <Image src={logo} alt="Logo de Septrum" class="w-40" />
-        <span>SEPTRUM PERÚ</span>
+      <h2 class="flex flex-col items-start gap-2 text-[32px] text-white">
+        <Image src={logo} alt="Logo de Septrum" class="w-35" />
+        <span class="font-semibold tracking-tight">SEPTRUM</span>
       </h2>
       <p>
         Somos una empresa dedicada a la fabricación e importación de equipos de
@@ -28,7 +26,7 @@ import { WHATSAPP_URL } from "../lib/constants";
           href="https://www.facebook.com/septrumperu"
           target="_blank"
           rel="noopener noreferrer"
-          class="size-6.5 text-neutral-50 transition-colors duration-300 hover:text-neutral-400"
+          class="hover:text-muted-dark size-6.5 text-white transition-colors duration-300"
         >
           <svg role="img" viewBox="0 0 24 24"
             ><title>Facebook</title><path
@@ -40,7 +38,7 @@ import { WHATSAPP_URL } from "../lib/constants";
           href="https://www.instagram.com/septrumperu/"
           target="_blank"
           rel="noopener noreferrer"
-          class="size-6.5 text-neutral-50 transition-colors duration-300 hover:text-neutral-400"
+          class="hover:text-muted-dark size-6.5 text-white transition-colors duration-300"
         >
           <svg role="img" viewBox="0 0 24 24"
             ><title>Instagram</title><path
@@ -52,7 +50,7 @@ import { WHATSAPP_URL } from "../lib/constants";
           href={WHATSAPP_URL}
           target="_blank"
           rel="noreferrer noopener"
-          class="size-6.5 text-neutral-50 transition-colors duration-300 hover:text-neutral-400"
+          class="hover:text-muted-dark size-6.5 text-white transition-colors duration-300"
         >
           <svg role="img" viewBox="0 0 24 24"
             ><title>WhatsApp</title><path
@@ -80,22 +78,31 @@ import { WHATSAPP_URL } from "../lib/constants";
 
     <article class="flex justify-center">
       <div class="flex w-full flex-col items-start gap-6 md:w-auto">
-        <h3 class="font-semibold text-neutral-50">Información de Contacto</h3>
-        <p class="flex items-center gap-2">
-          <MapPinned size={16} />
-          Arequipa, Perú
-        </p>
-        <a
-          class="footer-link flex items-center gap-2"
-          href="mailto:ventas@septrumperu.com"
-        >
-          <Mail size={16} />
-          ventas@septrumperu.com
-        </a>
-        <a class="footer-link flex items-center gap-2" href="tel:+51978205516">
-          <Phone size={16} />
-          +51 978 205 516
-        </a>
+        <h3 class="font-semibold text-white">Información de Contacto</h3>
+        <div class="flex flex-col items-start gap-3">
+          <p class="flex items-center gap-2">
+            <MapPinned size={16} />
+            Arequipa, Perú
+          </p>
+          <a
+            class="footer-link flex items-center gap-2"
+            href="mailto:ventas@septrumperu.com"
+          >
+            <Mail size={16} />
+            ventas@septrumperu.com
+          </a>
+          <a
+            class="footer-link group flex items-center gap-2"
+            href="tel:+51978205516"
+          >
+            <Phone size={16} class="block group-hover:hidden" />
+            <PhoneCall
+              size={16}
+              class="animate-phone hidden group-hover:block"
+            />
+            +51 978 205 516
+          </a>
+        </div>
       </div>
     </article>
   </section>
