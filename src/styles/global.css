@@ -223,6 +223,19 @@
 }
 
 @layer components {
+  /* Product filter pills — Todos + one per category, on the Productos page. */
+  .filter-pill {
+    @apply cursor-pointer rounded-full border-2 border-black/15 bg-transparent px-4.5 pt-3.5 pb-3 text-base font-medium whitespace-nowrap text-black transition-colors duration-200;
+  }
+
+  .filter-pill:hover {
+    @apply border-black/30;
+  }
+
+  .filter-pill-active {
+    @apply border-black bg-black text-white;
+  }
+
   .btn {
     @apply relative inline-flex items-center justify-center overflow-hidden rounded-full px-7 pt-4.5 pb-4 text-center leading-5 font-medium uppercase no-underline;
     transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);

@@ -1,16 +1,27 @@
 ---
 import { Image } from "astro:assets";
+import { getCollection } from "astro:content";
+import { Search, X } from "@lucide/astro";
 import BaseLayout from "../layouts/base.astro";
 
 import cta from "../images/productos/cta.jpg";
-import { WHATSAPP_URL } from "../lib/constants";
+import { WHATSAPP_URL, getProductQuoteUrl } from "../lib/constants";
+import { categories, getCategoryByName } from "../lib/categories";
 import Arrow from "../components/Arrow.astro";
+
+const productEntries = await getCollection("products");
+const products = productEntries
+  .map((entry) => ({
+    name: entry.data.name,
+    category: getCategoryByName(entry.data.category)!,
+  }))
+  .sort((a, b) => a.name.localeCompare(b.name));
 ---
 
 <BaseLayout title="Septrum — Productos">
   <article class="px-6">
     <section
-      class="mwx flex flex-col gap-8 pb-24 sm:gap-12 sm:pt-16 md:pt-24 md:pb-32"
+      class="mwx flex flex-col gap-8 pb-16 sm:gap-12 sm:pt-16 md:pt-24 md:pb-20"
     >
       <div
         class="flex flex-col gap-8 md:flex-row md:items-end md:justify-between"
@@ -28,14 +39,110 @@ import Arrow from "../components/Arrow.astro";
         <p
           class="text-muted max-w-xl text-lg leading-relaxed font-light md:max-w-133.75 md:text-xl"
         >
-          Explora por categoría. Cada equipo se cotiza a medida según el caudal,
-          la calidad de agua y la normativa de tu proceso. <strong
+          Explora por categoría. Cada equipo se cotiza a medida según el
+          caudal, la calidad de agua y la normativa de tu proceso. <strong
             class="font-medium text-black">Solicita una cotización</strong
           > y un ingeniero te responderá.
         </p>
       </div>
     </section>
+
+    <section class="mwx flex flex-col gap-8 pb-24 md:pb-32">
+      <div class="flex flex-col gap-4">
+        <div
+          class="border-border flex w-full max-w-110 items-center gap-2 rounded-full border-2 px-4.5 py-3.5"
+        >
+          <Search size={20} class="text-muted-dark shrink-0" />
+          <input
+            type="text"
+            id="product-search"
+            placeholder="Buscar..."
+            autocomplete="off"
+            class="text-black placeholder:text-muted-dark w-full bg-transparent text-base outline-none"
+          />
+          <button
+            type="button"
+            id="clear-search"
+            aria-label="Limpiar búsqueda"
+            class="text-muted-dark hidden shrink-0 cursor-pointer"
+          >
+            <X size={20} />
+          </button>
+        </div>
+
+        <div id="category-filters" class="flex flex-wrap gap-3">
+          <button
+            type="button"
+            data-category-filter=""
+            class="filter-pill filter-pill-active"
+          >
+            Todos
+          </button>
+          {
+            categories.map((category) => (
+              <button
+                type="button"
+                data-category-filter={category.slug}
+                class="filter-pill"
+              >
+                {category.name}
+              </button>
+            ))
+          }
+        </div>
+      </div>
+
+      <p id="product-count" class="text-muted-dark">
+        {products.length} equipos — todos se cotizan a medida
+      </p>
+
+      <div
+        id="product-grid"
+        class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4"
+      >
+        {
+          products.map((product) => (
+            <div
+              data-product-name={product.name.toLowerCase()}
+              data-product-category={product.category.slug}
+              class="border-border overflow-hidden rounded-[20px] border-2"
+            >
+              <Image
+                src={product.category.image}
+                alt={product.name}
+                width={320}
+                height={320}
+                densities={[1, 2]}
+                class="aspect-square w-full object-cover"
+              />
+              <div class="flex flex-col gap-6 p-6">
+                <div class="flex flex-col gap-1">
+                  <h3 class="text-xl font-semibold text-black">
+                    {product.name}
+                  </h3>
+                  <p class="text-muted">{product.category.name}</p>
+                </div>
+                <a
+                  href={getProductQuoteUrl(product.name)}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                  class="flex items-end gap-2 font-medium text-black no-underline"
+                >
+                  Solicitar cotización
+                  <Arrow />
+                </a>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+
+      <p id="no-results" class="text-muted hidden py-16 text-center text-lg">
+        No encontramos equipos que coincidan con tu búsqueda.
+      </p>
+    </section>
   </article>
+
   <article class="px-6">
     <section class="mwx pb-24 md:pb-32">
       <div
@@ -78,3 +185,88 @@ import Arrow from "../components/Arrow.astro";
     </section>
   </article>
 </BaseLayout>
+
+<script>
+  const searchInput = document.getElementById(
+    "product-search",
+  ) as HTMLInputElement;
+  const clearBtn = document.getElementById(
+    "clear-search",
+  ) as HTMLButtonElement;
+  const pills = document.querySelectorAll<HTMLButtonElement>(
+    "[data-category-filter]",
+  );
+  const cards = document.querySelectorAll<HTMLElement>(
+    "[data-product-name]",
+  );
+  const countEl = document.getElementById("product-count");
+  const noResultsEl = document.getElementById("no-results");
+  const grid = document.getElementById("product-grid");
+
+  const params = new URLSearchParams(window.location.search);
+  let activeCategory = params.get("category") ?? "";
+
+  if (![...pills].some((p) => p.dataset.categoryFilter === activeCategory)) {
+    activeCategory = "";
+  }
+
+  function setActivePill() {
+    pills.forEach((pill) => {
+      const isActive = (pill.dataset.categoryFilter ?? "") === activeCategory;
+      pill.classList.toggle("filter-pill-active", isActive);
+    });
+  }
+
+  function applyFilters() {
+    const query = searchInput.value.trim().toLowerCase();
+    clearBtn.classList.toggle("hidden", query.length === 0);
+
+    let visibleCount = 0;
+
+    cards.forEach((card) => {
+      const matchesCategory =
+        !activeCategory || card.dataset.productCategory === activeCategory;
+      const matchesQuery =
+        !query || card.dataset.productName?.includes(query);
+      const visible = matchesCategory && matchesQuery;
+      card.classList.toggle("hidden", !visible);
+      if (visible) visibleCount += 1;
+    });
+
+    if (countEl) {
+      countEl.textContent =
+        visibleCount === 1
+          ? "1 equipo — todos se cotizan a medida"
+          : `${visibleCount} equipos — todos se cotizan a medida`;
+    }
+
+    noResultsEl?.classList.toggle("hidden", visibleCount !== 0);
+    grid?.classList.toggle("hidden", visibleCount === 0);
+  }
+
+  pills.forEach((pill) => {
+    pill.addEventListener("click", () => {
+      activeCategory = pill.dataset.categoryFilter ?? "";
+      setActivePill();
+      applyFilters();
+
+      const url = new URL(window.location.href);
+      if (activeCategory) {
+        url.searchParams.set("category", activeCategory);
+      } else {
+        url.searchParams.delete("category");
+      }
+      window.history.replaceState({}, "", url);
+    });
+  });
+
+  searchInput.addEventListener("input", applyFilters);
+  clearBtn.addEventListener("click", () => {
+    searchInput.value = "";
+    applyFilters();
+    searchInput.focus();
+  });
+
+  setActivePill();
+  applyFilters();
+</script>

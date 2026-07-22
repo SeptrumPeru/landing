@@ -3,62 +3,12 @@ import { Image } from "astro:assets";
 
 import BaseLayout from "../layouts/base.astro";
 import { WHATSAPP_URL } from "../lib/constants";
+import { categories } from "../lib/categories";
 import heroPhoto from "../images/hero-photo.png";
 import ctaBg from "../images/cta-bg.jpg";
 import testimonialPhoto from "../images/testimonial-photo.png";
-import categorySensor from "../images/category-sensor.jpg";
-import categoryFlow from "../images/category-flow.jpg";
-import categoryFilter from "../images/category-filter.jpg";
-import categoryUv from "../images/category-uv.jpg";
-import categoryValve from "../images/category-valve.jpg";
-import categoryAccessory from "../images/category-accessory.jpg";
 import Arrow from "../components/Arrow.astro";
 import Category from "../components/Category.astro";
-
-const categories = [
-  {
-    name: "Sensores e Instrumentación",
-    description:
-      "Sensores de pH, ORP, oxígeno disuelto, conductividad y temperatura para monitoreo en línea y otros usos.",
-    href: "/productos",
-    image: categorySensor,
-  },
-  {
-    name: "Medición de Flujo",
-    description:
-      "Caudalímetros y sensores de flujo para control preciso en procesos industriales.",
-    href: "/productos",
-    image: categoryFlow,
-  },
-  {
-    name: "Filtración",
-    description:
-      "Filtros industriales para sólidos, sedimentos y partículas en sistemas de agua para uso humano e industrial.",
-    href: "/productos",
-    image: categoryFilter,
-  },
-  {
-    name: "Sistemas UV",
-    description:
-      "Equipos de desinfección ultravioleta para tratamiento seguro y eficiente del agua.",
-    href: "/productos",
-    image: categoryUv,
-  },
-  {
-    name: "Válvulas",
-    description:
-      "Válvulas industriales para control y regulación de flujo en procesos hidráulicos.",
-    href: "/productos",
-    image: categoryValve,
-  },
-  {
-    name: "Accesorios y Repuestos",
-    description:
-      "Componentes y repuestos originales para mantenimiento y optimización de equipos.",
-    href: "/productos",
-    image: categoryAccessory,
-  },
-];
 
 const motivos = [
   {
@@ -249,7 +199,12 @@ const testimonios = [
         {
           categories.map((category, i) => (
             <div data-reveal style={{ "--i": i % 3 }}>
-              <Category category={category} />
+              <Category
+                category={{
+                  ...category,
+                  href: `/productos?category=${category.slug}`,
+                }}
+              />
             </div>
           ))
         }
@@ -393,7 +348,7 @@ const testimonios = [
             height={432}
             densities={[1, 2]}
             data-parallax
-            class="absolute inset-x-0 -top-[15%] h-[130%] w-full object-cover"
+            class="absolute inset-x-0 top-[-15%] h-[130%] w-full object-cover"
           />
         </div>
       </div>
