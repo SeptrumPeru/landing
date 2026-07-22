@@ -12,3 +12,12 @@ export function getProductQuoteUrl(productName: string) {
     )
   );
 }
+
+export function getProductDatasheetUrl(productName: string) {
+  return (
+    `https://wa.me/${WHATSAPP_NUMBER}?text=` +
+    encodeURIComponent(
+      `Hola, me gustaría recibir la ficha técnica del equipo "${productName}"`,
+    )
+  );
+}

@@ -1,0 +1,27 @@
+---
+interface Props {
+  specs: { label: string; value: string }[];
+}
+
+const { specs } = Astro.props;
+---
+
+{
+  specs.length > 0 && (
+    <div class="bg-border grid grid-cols-1 gap-[2px] overflow-hidden rounded-[20px] md:grid-cols-2">
+      {specs.map((spec, i) => (
+        <div
+          class:list={[
+            "flex flex-col gap-2 bg-white p-6",
+            { "md:col-span-2": specs.length % 2 !== 0 && i === specs.length - 1 },
+          ]}
+        >
+          <p class="text-muted font-mono text-xs tracking-wider uppercase">
+            {spec.label}
+          </p>
+          <p class="text-lg font-semibold text-black">{spec.value}</p>
+        </div>
+      ))}
+    </div>
+  )
+}

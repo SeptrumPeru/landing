@@ -199,7 +199,7 @@ const currentPath = Astro.url.pathname;
     openBtn?.setAttribute("aria-expanded", "true");
     document.documentElement.style.overflow = "hidden";
     setBackgroundInert(true);
-    playTone({ start: 520, end: 780, duration: 0.13, volume: 0.2 });
+    playTone({ start: 520, end: 780, duration: 0.13, volume: 0.25 });
     // .focus() forces a synchronous style/layout flush. Called on an element
     // inside the very subtree we just changed, it collapses the "before" and
     // "after" frames into one before the browser paints the closed state, so
@@ -217,7 +217,7 @@ const currentPath = Astro.url.pathname;
     openBtn?.setAttribute("aria-expanded", "false");
     document.documentElement.style.overflow = "";
     setBackgroundInert(false);
-    playTone({ start: 640, end: 380, duration: 0.1, volume: 0.2 });
+    playTone({ start: 640, end: 380, duration: 0.1, volume: 0.25 });
     requestAnimationFrame(() => {
       openBtn?.focus();
     });

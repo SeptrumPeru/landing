@@ -51,6 +51,9 @@
   .animate-phone {
     animation: phone 1s linear infinite both;
   }
+  .scale-image {
+    @apply size-full object-cover transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-110;
+  }
 }
 
 @keyframes phone {
@@ -225,7 +228,7 @@
 @layer components {
   /* Product filter pills — Todos + one per category, on the Productos page. */
   .filter-pill {
-    @apply cursor-pointer rounded-full border-2 border-black/15 bg-transparent px-4.5 pt-3.5 pb-3 text-base font-medium whitespace-nowrap text-black transition-colors duration-200;
+    @apply cursor-pointer rounded-full border-2 border-black/15 bg-transparent px-4 pt-2.75 pb-2.75 text-base leading-5 font-medium whitespace-nowrap text-black transition-colors duration-200;
   }
 
   .filter-pill:hover {

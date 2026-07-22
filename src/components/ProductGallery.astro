@@ -1,0 +1,156 @@
+---
+import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
+
+interface Props {
+  images: ImageMetadata[];
+  name: string;
+}
+
+const { images, name } = Astro.props;
+---
+
+<div class="flex flex-col gap-6" data-gallery>
+  <div
+    class="rounded-base relative aspect-square w-full overflow-hidden md:rounded-[36px]"
+  >
+    {
+      images.map((img, i) => (
+        <div
+          data-gallery-slide
+          data-index={i}
+          class="absolute inset-0"
+          style={i === 0 ? "" : "display:none"}
+        >
+          <Image
+            src={img}
+            alt=""
+            aria-hidden="true"
+            width={900}
+            class="absolute inset-0 size-full scale-110 object-cover blur-2xl"
+          />
+          <Image
+            src={img}
+            alt={`${name} — imagen ${i + 1} de ${images.length}`}
+            width={900}
+            class="relative size-full object-contain"
+          />
+        </div>
+      ))
+    }
+
+    {
+      images.length > 1 && (
+        <>
+          <button
+            type="button"
+            data-gallery-prev
+            aria-label="Imagen anterior"
+            class="absolute top-1/2 left-6 flex size-9 -translate-y-1/2 -scale-x-100 cursor-pointer items-center justify-center rounded-full bg-white/80 text-black backdrop-blur transition-colors hover:bg-white"
+          >
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 20 20"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M13.125 9.45833H4.74958C4.53722 9.45833 4.35917 9.38688 4.21542 9.24396C4.07181 9.10104 4 8.92396 4 8.71271C4 8.50146 4.07181 8.32292 4.21542 8.17708C4.35917 8.03125 4.53722 7.95833 4.74958 7.95833H13.125L9.45396 4.28729C9.3041 4.13743 9.22917 3.96181 9.22917 3.76042C9.22917 3.55903 9.30556 3.37861 9.45833 3.21917C9.61111 3.07306 9.78819 3 9.98958 3C10.191 3 10.3667 3.07514 10.5169 3.22542L15.4708 8.18563C15.5458 8.26076 15.6007 8.34215 15.6354 8.42979C15.6701 8.51743 15.6875 8.61139 15.6875 8.71167C15.6875 8.81181 15.6701 8.90576 15.6354 8.99354C15.6007 9.08118 15.5486 9.15972 15.4792 9.22917L10.5208 14.1875C10.3681 14.3403 10.1944 14.4132 10 14.4062C9.80556 14.3993 9.63194 14.3228 9.47917 14.1767C9.32639 14.0172 9.25 13.8356 9.25 13.6319C9.25 13.4283 9.32639 13.2524 9.47917 13.1042L13.125 9.45833Z"
+                fill="currentColor"
+              />
+            </svg>
+          </button>
+          <button
+            type="button"
+            data-gallery-next
+            aria-label="Imagen siguiente"
+            class="absolute top-1/2 right-6 flex size-9 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full bg-white/80 text-black backdrop-blur transition-colors hover:bg-white"
+          >
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 20 20"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M13.125 9.45833H4.74958C4.53722 9.45833 4.35917 9.38688 4.21542 9.24396C4.07181 9.10104 4 8.92396 4 8.71271C4 8.50146 4.07181 8.32292 4.21542 8.17708C4.35917 8.03125 4.53722 7.95833 4.74958 7.95833H13.125L9.45396 4.28729C9.3041 4.13743 9.22917 3.96181 9.22917 3.76042C9.22917 3.55903 9.30556 3.37861 9.45833 3.21917C9.61111 3.07306 9.78819 3 9.98958 3C10.191 3 10.3667 3.07514 10.5169 3.22542L15.4708 8.18563C15.5458 8.26076 15.6007 8.34215 15.6354 8.42979C15.6701 8.51743 15.6875 8.61139 15.6875 8.71167C15.6875 8.81181 15.6701 8.90576 15.6354 8.99354C15.6007 9.08118 15.5486 9.15972 15.4792 9.22917L10.5208 14.1875C10.3681 14.3403 10.1944 14.4132 10 14.4062C9.80556 14.3993 9.63194 14.3228 9.47917 14.1767C9.32639 14.0172 9.25 13.8356 9.25 13.6319C9.25 13.4283 9.32639 13.2524 9.47917 13.1042L13.125 9.45833Z"
+                fill="currentColor"
+              />
+            </svg>
+          </button>
+        </>
+      )
+    }
+  </div>
+
+  {
+    images.length > 1 && (
+      <div class="flex gap-4 md:gap-6">
+        {images.map((img, i) => (
+          <button
+            type="button"
+            data-gallery-thumb
+            data-index={i}
+            aria-label={`Ver imagen ${i + 1}`}
+            class:list={[
+              "aspect-square flex-1 cursor-pointer overflow-hidden rounded-2xl border-2 transition-colors",
+              i === 0 ? "border-black" : "border-border",
+            ]}
+          >
+            <Image
+              src={img}
+              alt=""
+              width={140}
+              class="size-full object-cover"
+            />
+          </button>
+        ))}
+      </div>
+    )
+  }
+</div>
+
+<script>
+  document
+    .querySelectorAll<HTMLElement>("[data-gallery]")
+    .forEach((gallery) => {
+      const slides =
+        gallery.querySelectorAll<HTMLElement>("[data-gallery-slide]");
+      const thumbs =
+        gallery.querySelectorAll<HTMLButtonElement>("[data-gallery-thumb]");
+      const prevBtn = gallery.querySelector<HTMLButtonElement>(
+        "[data-gallery-prev]",
+      );
+      const nextBtn = gallery.querySelector<HTMLButtonElement>(
+        "[data-gallery-next]",
+      );
+
+      if (slides.length <= 1) return;
+
+      let active = 0;
+
+      function show(index: number) {
+        active = (index + slides.length) % slides.length;
+
+        slides.forEach((slide, i) => {
+          slide.style.display = i === active ? "" : "none";
+        });
+
+        thumbs.forEach((thumb, i) => {
+          thumb.classList.toggle("border-black", i === active);
+          thumb.classList.toggle("border-border", i !== active);
+        });
+      }
+
+      thumbs.forEach((thumb) => {
+        thumb.addEventListener("click", () => {
+          show(Number(thumb.dataset.index));
+        });
+      });
+
+      prevBtn?.addEventListener("click", () => show(active - 1));
+      nextBtn?.addEventListener("click", () => show(active + 1));
+    });
+</script>

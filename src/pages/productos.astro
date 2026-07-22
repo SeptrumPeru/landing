@@ -5,13 +5,15 @@ import { Search, X } from "@lucide/astro";
 import BaseLayout from "../layouts/base.astro";
 
 import cta from "../images/productos/cta.jpg";
-import { WHATSAPP_URL, getProductQuoteUrl } from "../lib/constants";
+import { WHATSAPP_URL } from "../lib/constants";
 import { categories, getCategoryByName } from "../lib/categories";
 import Arrow from "../components/Arrow.astro";
+import Product from "../components/Product.astro";
 
 const productEntries = await getCollection("products");
 const products = productEntries
   .map((entry) => ({
+    slug: entry.id,
     name: entry.data.name,
     category: getCategoryByName(entry.data.category)!,
   }))
@@ -39,8 +41,8 @@ const products = productEntries
         <p
           class="text-muted max-w-xl text-lg leading-relaxed font-light md:max-w-133.75 md:text-xl"
         >
-          Explora por categoría. Cada equipo se cotiza a medida según el
-          caudal, la calidad de agua y la normativa de tu proceso. <strong
+          Explora por categoría. Cada equipo se cotiza a medida según el caudal,
+          la calidad de agua y la normativa de tu proceso. <strong
             class="font-medium text-black">Solicita una cotización</strong
           > y un ingeniero te responderá.
         </p>
@@ -48,17 +50,27 @@ const products = productEntries
     </section>
 
     <section class="mwx flex flex-col gap-8 pb-24 md:pb-32">
-      <div class="flex flex-col gap-4">
+      <div class="flex flex-col gap-3">
         <div
-          class="border-border flex w-full max-w-110 items-center gap-2 rounded-full border-2 px-4.5 py-3.5"
+          class="border-border flex w-full max-w-110 items-center gap-2 rounded-full border-2 px-4 pt-3 pb-2.5"
         >
-          <Search size={20} class="text-muted-dark shrink-0" />
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 20 20"
+            fill="none"
+            class="shrink-0"
+          >
+            <path
+              d="M8.00063 13C6.61132 13 5.43056 12.5139 4.45833 11.5417C3.48611 10.5694 3 9.38889 3 8C3 6.61111 3.48611 5.43056 4.45833 4.45833C5.43056 3.48611 6.61111 3 8 3C9.38889 3 10.5694 3.48611 11.5417 4.45833C12.5139 5.43056 13 6.61132 13 8.00063C13 8.5616 12.9132 9.09062 12.7396 9.58771C12.566 10.0848 12.3264 10.5417 12.0208 10.9583L16.4792 15.4167C16.6319 15.5694 16.7083 15.7431 16.7083 15.9375C16.7083 16.1319 16.6319 16.3056 16.4792 16.4583C16.3264 16.6111 16.1493 16.6875 15.9479 16.6875C15.7465 16.6875 15.5694 16.6111 15.4167 16.4583L10.9583 12.0208C10.5417 12.3264 10.0848 12.566 9.58771 12.7396C9.09062 12.9132 8.5616 13 8.00063 13ZM8 11.5C8.97222 11.5 9.79861 11.1597 10.4792 10.4792C11.1597 9.79861 11.5 8.97222 11.5 8C11.5 7.02778 11.1597 6.20139 10.4792 5.52083C9.79861 4.84028 8.97222 4.5 8 4.5C7.02778 4.5 6.20139 4.84028 5.52083 5.52083C4.84028 6.20139 4.5 7.02778 4.5 8C4.5 8.97222 4.84028 9.79861 5.52083 10.4792C6.20139 11.1597 7.02778 11.5 8 11.5Z"
+              fill="var(--color-muted-dark)"></path>
+          </svg>
           <input
             type="text"
             id="product-search"
             placeholder="Buscar..."
             autocomplete="off"
-            class="text-black placeholder:text-muted-dark w-full bg-transparent text-base outline-none"
+            class="placeholder:text-muted-dark w-full bg-transparent text-base leading-5 text-black outline-none"
           />
           <button
             type="button"
@@ -69,8 +81,7 @@ const products = productEntries
             <X size={20} />
           </button>
         </div>
-
-        <div id="category-filters" class="flex flex-wrap gap-3">
+        <div id="category-filters" class="flex flex-wrap gap-2.5">
           <button
             type="button"
             data-category-filter=""
@@ -98,43 +109,9 @@ const products = productEntries
 
       <div
         id="product-grid"
-        class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4"
+        class="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
       >
-        {
-          products.map((product) => (
-            <div
-              data-product-name={product.name.toLowerCase()}
-              data-product-category={product.category.slug}
-              class="border-border overflow-hidden rounded-[20px] border-2"
-            >
-              <Image
-                src={product.category.image}
-                alt={product.name}
-                width={320}
-                height={320}
-                densities={[1, 2]}
-                class="aspect-square w-full object-cover"
-              />
-              <div class="flex flex-col gap-6 p-6">
-                <div class="flex flex-col gap-1">
-                  <h3 class="text-xl font-semibold text-black">
-                    {product.name}
-                  </h3>
-                  <p class="text-muted">{product.category.name}</p>
-                </div>
-                <a
-                  href={getProductQuoteUrl(product.name)}
-                  target="_blank"
-                  rel="noreferrer noopener"
-                  class="flex items-end gap-2 font-medium text-black no-underline"
-                >
-                  Solicitar cotización
-                  <Arrow />
-                </a>
-              </div>
-            </div>
-          ))
-        }
+        {products.map((product) => <Product {product} />)}
       </div>
 
       <p id="no-results" class="text-muted hidden py-16 text-center text-lg">
@@ -190,15 +167,11 @@ const products = productEntries
   const searchInput = document.getElementById(
     "product-search",
   ) as HTMLInputElement;
-  const clearBtn = document.getElementById(
-    "clear-search",
-  ) as HTMLButtonElement;
+  const clearBtn = document.getElementById("clear-search") as HTMLButtonElement;
   const pills = document.querySelectorAll<HTMLButtonElement>(
     "[data-category-filter]",
   );
-  const cards = document.querySelectorAll<HTMLElement>(
-    "[data-product-name]",
-  );
+  const cards = document.querySelectorAll<HTMLElement>("[data-product-name]");
   const countEl = document.getElementById("product-count");
   const noResultsEl = document.getElementById("no-results");
   const grid = document.getElementById("product-grid");
@@ -226,8 +199,7 @@ const products = productEntries
     cards.forEach((card) => {
       const matchesCategory =
         !activeCategory || card.dataset.productCategory === activeCategory;
-      const matchesQuery =
-        !query || card.dataset.productName?.includes(query);
+      const matchesQuery = !query || card.dataset.productName?.includes(query);
       const visible = matchesCategory && matchesQuery;
       card.classList.toggle("hidden", !visible);
       if (visible) visibleCount += 1;
