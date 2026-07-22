@@ -1,37 +1,202 @@
 ---
+import { Image } from "astro:assets";
+import { Target, Compass } from "@lucide/astro";
 import BaseLayout from "../layouts/base.astro";
-import { WHATSAPP_URL } from "../lib/constants";
+import heroPhoto from "../images/nosotros/hero.png";
+import step1 from "../images/nosotros/step1.png";
+import step2 from "../images/nosotros/step2.png";
+import step3 from "../images/nosotros/step3.png";
+import step4 from "../images/nosotros/step4.png";
+
+const steps = [
+  {
+    number: "1. Primer paso",
+    title: "Consulta técnica",
+    description: "Analizamos tu proceso, calidad de agua y objetivos.",
+    image: step1,
+  },
+  {
+    number: "2. Luego",
+    title: "Propuesta a medida",
+    description: "Seleccionamos o fabricamos el equipo y cotizamos.",
+    image: step2,
+  },
+  {
+    number: "3. Después",
+    title: "Fabricación / importación",
+    description: "Producimos o traemos el equipo certificado.",
+    image: step3,
+  },
+  {
+    number: "4. Por último",
+    title: "Puesta en marcha",
+    description: "Instalamos, calibramos y capacitamos a tu equipo.",
+    image: step4,
+  },
+];
 ---
 
 <BaseLayout title="Septrum — Nosotros">
-  <section
-    class="mx-auto flex max-w-321 flex-col gap-5 px-6 pt-16 pb-24 md:gap-7 md:pt-24 md:pb-32"
-  >
-    <p class="text-green font-mono text-sm tracking-wider uppercase">
-      Tratamiento de aguas industriales — Arequipa, Perú
-    </p>
-    <h1
-      class="max-w-xl text-[42px] leading-none tracking-tight text-balance text-black md:text-[64px]"
+  <article class="px-6">
+    <section
+      class="mwx flex flex-col gap-8 pb-24 sm:gap-12 sm:pt-16 md:pt-24 md:pb-32"
     >
-      Filtros <strong class="text-green font-semibold"><em>UV</em></strong> de agua
-      para tu empresa
-    </h1>
-    <p
-      class="text-muted max-w-xl text-lg leading-relaxed font-light md:text-xl"
-    >
-      Fabricamos e importamos <strong class="font-medium text-black"
-        >sensores, medición de flujo, sistemas UV, filtración y válvulas</strong
-      > de grado industrial. Equipos certificados para el tratamiento de aguas en
-      tu proceso.
-    </p>
-    <div class="flex flex-col gap-2 md:flex-row md:items-center">
-      <a href="/productos" class="btn btn-primary">Ver productos</a>
-      <a
-        href={WHATSAPP_URL}
-        target="_blank"
-        rel="noreferrer noopener"
-        class="btn btn-secondary">Contáctanos</a
+      <div
+        class="flex flex-col gap-8 md:flex-row md:items-end md:justify-between"
       >
+        <div class="flex flex-col gap-4 md:max-w-xl md:gap-7">
+          <p class="text-green font-mono text-sm tracking-wider uppercase">
+            Sobre nosotros
+          </p>
+          <h1
+            class="text-[42px] leading-none tracking-tight text-balance text-black md:text-[64px]"
+          >
+            Hacemos que el agua trabaje para tu <em
+              class="text-green font-semibold not-italic">industria</em
+            >
+          </h1>
+        </div>
+        <p
+          class="text-muted max-w-xl text-lg leading-relaxed font-light md:max-w-md md:text-xl"
+        >
+          Desde Arequipa, diseñamos, fabricamos e importamos los equipos que
+          mantienen el agua de los procesos industriales bajo control: medida,
+          filtrada, desinfectada y certificada.
+        </p>
+      </div>
+
+      <div class="rounded-base overflow-hidden md:rounded-[48px]">
+        <Image
+          src={heroPhoto}
+          alt="Equipos de tratamiento de agua fabricados por Septrum"
+          width={1284}
+          height={480}
+          densities={[1, 2]}
+          class="h-70 w-full object-cover md:h-120"
+        />
+      </div>
+    </section>
+  </article>
+
+  <section class="bg-black px-6 py-20 text-white md:py-28">
+    <div class="mwx flex flex-col gap-12">
+      <div data-reveal class="flex flex-col gap-5 md:max-w-xl md:gap-7">
+        <p class="text-lime font-mono text-sm tracking-wider uppercase">
+          El proceso
+        </p>
+        <h2
+          class="text-[32px] leading-none tracking-tight text-balance text-white md:text-[48px]"
+        >
+          De la consulta a la puesta en marcha
+        </h2>
+      </div>
+
+      <div
+        class="grid grid-cols-1 gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-4"
+      >
+        {
+          steps.map((step, i) => (
+            <div
+              data-reveal
+              style={{ "--i": i }}
+              class="group flex flex-col gap-4"
+            >
+              <div class="rounded-base aspect-7/4 overflow-hidden">
+                <Image
+                  src={step.image}
+                  alt={step.title}
+                  width={320}
+                  height={183}
+                  densities={[1, 2]}
+                  class="size-full object-cover transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-110"
+                />
+              </div>
+              <div class="flex flex-col gap-2">
+                <p class="text-lime font-mono text-sm tracking-wider uppercase">
+                  {step.number}
+                </p>
+                <h3 class="text-2xl font-semibold tracking-tight text-white">
+                  {step.title}
+                </h3>
+                <p class="text-muted">{step.description}</p>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="px-6 py-20 md:py-28">
+    <div class="mwx flex flex-col gap-5 pb-12 md:max-w-xl md:gap-7 md:pb-16">
+      <p class="text-green font-mono text-sm tracking-wider uppercase">
+        Misión y visión
+      </p>
+      <h2
+        class="text-[32px] leading-none tracking-tight text-balance text-black md:text-[48px]"
+      >
+        Lo que nos mueve y hacia dónde vamos
+      </h2>
+    </div>
+    <div class="mwx grid grid-cols-1 gap-8 md:grid-cols-2">
+      <div
+        data-reveal
+        class="rounded-base flex flex-col gap-6 bg-black/5 p-8 md:p-10"
+      >
+        <div class="flex items-center justify-between">
+          <div
+            class="bg-green flex size-12 items-center justify-center rounded-full text-white"
+          >
+            <Target size={22} />
+          </div>
+          <span class="text-muted font-mono text-sm tracking-wider">01</span>
+        </div>
+        <div class="flex flex-col gap-3">
+          <p class="text-green font-mono text-sm tracking-wider uppercase">
+            Nuestra misión
+          </p>
+          <h3
+            class="text-[26px] leading-none tracking-tight text-balance text-black md:text-[32px]"
+          >
+            El compromiso que guía nuestro trabajo
+          </h3>
+        </div>
+        <p class="text-muted text-lg leading-relaxed font-light">
+          Obtener productos de primera calidad, con el compromiso de cubrir las
+          necesidades del mercado. Ofreciendo un servicio al cliente
+          personalizado.
+        </p>
+      </div>
+
+      <div
+        data-reveal
+        style={{ "--i": 1 }}
+        class="rounded-base flex flex-col gap-6 bg-black/5 p-8 md:p-10"
+      >
+        <div class="flex items-center justify-between">
+          <div
+            class="bg-green flex size-12 items-center justify-center rounded-full text-white"
+          >
+            <Compass size={22} />
+          </div>
+          <span class="text-muted font-mono text-sm tracking-wider">02</span>
+        </div>
+        <div class="flex flex-col gap-3">
+          <p class="text-green font-mono text-sm tracking-wider uppercase">
+            Nuestra visión
+          </p>
+          <h3
+            class="text-[26px] leading-none tracking-tight text-balance text-black md:text-[32px]"
+          >
+            El camino hacia la innovación
+          </h3>
+        </div>
+        <p class="text-muted text-lg leading-relaxed font-light">
+          Consolidarnos como una empresa comercializadora de productos, brindar
+          siempre nuevas soluciones inmediatas y opciones creativas para un
+          eficaz tratamiento de aguas.
+        </p>
+      </div>
     </div>
   </section>
 </BaseLayout>

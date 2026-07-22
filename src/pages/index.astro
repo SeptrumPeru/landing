@@ -106,7 +106,7 @@ const testimonios = [
 <BaseLayout title="Septrum — Filtros UV de agua industrial">
   <article class="px-6">
     <section
-      class="mwx flex flex-col gap-10 pt-0 pb-16 md:flex-row-reverse md:items-center md:justify-between md:gap-12 md:pb-14"
+      class="mwx flex flex-col gap-8 pt-0 pb-16 md:flex-row-reverse md:items-center md:justify-between md:gap-12 md:pb-14"
     >
       <div
         class="relative mx-auto aspect-4/3 w-full shrink-0 md:mx-0 md:aspect-657/579 md:w-95 lg:w-125 xl:w-164.25"
@@ -142,10 +142,10 @@ const testimonios = [
           </div>
         </div>
         <div
-          class="absolute inset-0 flex items-center justify-center md:inset-auto md:left-0 md:top-[20.39%] md:h-[63.86%] md:w-[66.99%]"
+          class="absolute inset-0 flex items-center justify-center md:inset-auto md:top-[20.39%] md:left-0 md:h-[63.86%] md:w-[66.99%]"
         >
           <div
-            class="animate-float-d h-full w-full overflow-hidden rounded-[28px] md:h-[96.02%] md:w-[97.24%] md:rotate-2 lg:rounded-[36px]"
+            class="md:animate-float-d rounded-base h-full w-full overflow-hidden md:h-[96.02%] md:w-[97.24%] md:rotate-2 lg:rounded-[36px]"
           >
             <Image
               src={heroPhoto}
@@ -157,7 +157,7 @@ const testimonios = [
           </div>
         </div>
       </div>
-      <div class="flex flex-col gap-5 md:max-w-xl md:gap-7">
+      <div class="flex flex-col gap-4 md:max-w-xl md:gap-7">
         <p class="text-green font-mono text-sm tracking-wider uppercase">
           Tratamiento de aguas industriales — Arequipa, Perú
         </p>
@@ -288,7 +288,11 @@ const testimonios = [
         {
           motivos.map((motivo, i) => (
             <>
-              <div data-reveal style={{ "--i": i }} class="flex items-center gap-4">
+              <div
+                data-reveal
+                style={{ "--i": i }}
+                class="flex items-center gap-4"
+              >
                 <span class="text-lime font-mono text-sm tracking-wider uppercase">
                   {motivo.number}
                 </span>
@@ -508,25 +512,5 @@ const testimonios = [
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onScroll);
     updateParallax();
-  }
-
-  // Scroll reveal — AOS-style fade/rise for section blocks and cards.
-  const revealEls = document.querySelectorAll<HTMLElement>("[data-reveal]");
-
-  if (prefersReducedMotion) {
-    revealEls.forEach((el) => el.classList.add("is-visible"));
-  } else {
-    const revealObserver = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (!entry.isIntersecting) continue;
-          entry.target.classList.add("is-visible");
-          revealObserver.unobserve(entry.target);
-        }
-      },
-      { threshold: 0.15, rootMargin: "0px 0px -10% 0px" },
-    );
-
-    revealEls.forEach((el) => revealObserver.observe(el));
   }
 </script>
