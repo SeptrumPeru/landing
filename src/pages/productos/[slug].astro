@@ -1,5 +1,6 @@
 ---
 import { getCollection } from "astro:content";
+import { getImage } from "astro:assets";
 import BaseLayout from "../../layouts/base.astro";
 import { getCategoryByName } from "../../lib/categories";
 import {
@@ -33,9 +34,36 @@ const related = allProducts
     name: p.data.name,
     category: getCategoryByName(p.data.category)!,
   }));
+
+const description =
+  entry.data.description ??
+  `${entry.data.name} — ${category.name}. Equipo cotizado a medida por Septrum.`;
+
+const optimizedGalleryImages = await Promise.all(
+  images.map((img) =>
+    getImage({ src: img, width: 1200, height: 1200, format: "jpg" }),
+  ),
+);
+const productSchema = {
+  "@context": "https://schema.org",
+  "@type": "Product",
+  name: entry.data.name,
+  description,
+  category: category.name,
+  image: optimizedGalleryImages.map((img) =>
+    new URL(img.src, Astro.site).toString(),
+  ),
+  brand: { "@type": "Brand", name: "Septrum" },
+};
 ---
 
-<BaseLayout title={`Septrum — ${entry.data.name}`}>
+<BaseLayout
+  title={`Septrum — ${entry.data.name}`}
+  description={description}
+  image={images[0]}
+  type="product"
+  structuredData={productSchema}
+>
   <article class="px-6">
     <nav
       aria-label="Ruta de navegación"

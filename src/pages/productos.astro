@@ -20,7 +20,11 @@ const products = productEntries
   .sort((a, b) => a.name.localeCompare(b.name));
 ---
 
-<BaseLayout title="Septrum — Productos">
+<BaseLayout
+  title="Septrum — Productos"
+  description="Catálogo de equipos para el tratamiento de agua industrial: sensores, medición de flujo, filtración, sistemas UV, válvulas y accesorios. Cotización a medida."
+  image={cta}
+>
   <article class="px-6">
     <section
       class="mwx flex flex-col gap-8 pb-16 sm:gap-12 sm:pt-16 md:pt-24 md:pb-20"
@@ -52,7 +56,7 @@ const products = productEntries
     <section class="mwx flex flex-col gap-8 pb-24 md:pb-32">
       <div class="flex flex-col gap-3">
         <div
-          class="border-border flex w-full max-w-110 items-center gap-2 rounded-full border-2 px-4 pt-3 pb-2.5"
+          class="border-border focus-within:border-green flex w-full max-w-110 items-center gap-2 rounded-full border-2 px-4 pt-3 pb-2.5"
         >
           <svg
             width="20"
