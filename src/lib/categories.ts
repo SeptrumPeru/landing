@@ -1,9 +1,9 @@
-import categorySensor from "../images/category-sensor.jpg";
-import categoryFlow from "../images/category-flow.jpg";
-import categoryFilter from "../images/category-filter.jpg";
-import categoryUv from "../images/category-uv.jpg";
-import categoryValve from "../images/category-valve.jpg";
-import categoryAccessory from "../images/category-accessory.jpg";
+import categorySensor from "../images/categories/category-sensor.jpg";
+import categoryFlow from "../images/categories/category-flow.jpg";
+import categoryFilter from "../images/categories/category-filter.jpg";
+import categoryUv from "../images/categories/category-uv.jpg";
+import categoryValve from "../images/categories/category-valve.jpg";
+import categoryAccessory from "../images/categories/category-accessory.jpg";
 
 export const categories = [
   {

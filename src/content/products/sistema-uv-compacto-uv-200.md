@@ -3,9 +3,10 @@ name: "Sistema UV Compacto UV-200"
 category: "Sistemas UV"
 description: "Sistema de desinfección por luz ultravioleta de 254 nm para caudales de hasta 50 m³/h. Cámara en acero inoxidable 316L, lámparas de amalgama de larga vida y sensor de intensidad UV en línea. Certificado bajo norma NSF para agua de proceso."
 images:
-  - "../../images/category-uv.jpg"
-  - "../../images/hero-photo.png"
-  - "../../images/testimonial-photo.png"
+  - "../../images/categories/category-uv.jpg"
+  - "../../images/index/hero-photo.png"
+  - "../../images/index/testimonial-photo.png"
+  - "../../images/cross.png"
 specs:
   - label: "Material"
     value: "Acero SS316L"

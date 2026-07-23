@@ -54,6 +54,14 @@
   .scale-image {
     @apply size-full object-cover transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-110;
   }
+  .no-scrollbar {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
 }
 
 @keyframes phone {
@@ -222,6 +230,10 @@
     transition: none;
     opacity: 1;
     transform: none;
+  }
+
+  [data-gallery-track] {
+    scroll-behavior: auto !important;
   }
 }
 
