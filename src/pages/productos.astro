@@ -1,7 +1,7 @@
 ---
 import { Image } from "astro:assets";
 import { getCollection } from "astro:content";
-import { Search, X } from "@lucide/astro";
+import { X } from "@lucide/astro";
 import BaseLayout from "../layouts/base.astro";
 
 import cta from "../images/productos/cta.jpg";
@@ -153,7 +153,7 @@ const products = productEntries
           href={WHATSAPP_URL}
           target="_blank"
           rel="noreferrer noopener"
-          class="btn relative gap-2 bg-white text-black"
+          class="btn relative bg-white text-black"
         >
           Solicita una cotización
           <div class="hidden md:block"><Arrow /></div>
@@ -183,6 +183,26 @@ const products = productEntries
     activeCategory = "";
   }
 
+  // Accent-insensitive, separator-insensitive matching — "uf 600" or
+  // "caudalimetro" (no tilde) both match "Caudalímetro Ultrasónico UF-600".
+  function normalize(value: string) {
+    return value
+      .toLowerCase()
+      .replace(/[áàäâ]/g, "a")
+      .replace(/[éèëê]/g, "e")
+      .replace(/[íìïî]/g, "i")
+      .replace(/[óòöô]/g, "o")
+      .replace(/[úùüû]/g, "u")
+      .replace(/ñ/g, "n")
+      .replace(/[^a-z0-9]+/g, " ")
+      .trim();
+  }
+
+  const normalizedNames = new Map<HTMLElement, string>();
+  cards.forEach((card) => {
+    normalizedNames.set(card, normalize(card.dataset.productName ?? ""));
+  });
+
   function setActivePill() {
     pills.forEach((pill) => {
       const isActive = (pill.dataset.categoryFilter ?? "") === activeCategory;
@@ -191,15 +211,16 @@ const products = productEntries
   }
 
   function applyFilters() {
-    const query = searchInput.value.trim().toLowerCase();
-    clearBtn.classList.toggle("hidden", query.length === 0);
+    clearBtn.classList.toggle("hidden", searchInput.value.trim().length === 0);
+    const queryTokens = normalize(searchInput.value).split(" ").filter(Boolean);
 
     let visibleCount = 0;
 
     cards.forEach((card) => {
       const matchesCategory =
         !activeCategory || card.dataset.productCategory === activeCategory;
-      const matchesQuery = !query || card.dataset.productName?.includes(query);
+      const name = normalizedNames.get(card) ?? "";
+      const matchesQuery = queryTokens.every((token) => name.includes(token));
       const visible = matchesCategory && matchesQuery;
       card.classList.toggle("hidden", !visible);
       if (visible) visibleCount += 1;

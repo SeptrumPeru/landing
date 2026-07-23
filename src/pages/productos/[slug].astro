@@ -2,11 +2,15 @@
 import { getCollection } from "astro:content";
 import BaseLayout from "../../layouts/base.astro";
 import { getCategoryByName } from "../../lib/categories";
-import { getProductQuoteUrl, getProductDatasheetUrl } from "../../lib/constants";
+import {
+  getProductQuoteUrl,
+  getProductDatasheetUrl,
+} from "../../lib/constants";
 import Arrow from "../../components/Arrow.astro";
 import Product from "../../components/Product.astro";
 import ProductGallery from "../../components/ProductGallery.astro";
 import SpecsTable from "../../components/SpecsTable.astro";
+import { Download } from "@lucide/astro";
 
 export async function getStaticPaths() {
   const entries = await getCollection("products");
@@ -35,21 +39,27 @@ const related = allProducts
   <article class="px-6">
     <nav
       aria-label="Ruta de navegación"
-      class="mwx text-muted-dark flex items-center gap-3 pt-24 pb-8 font-mono text-sm tracking-wider uppercase md:pt-16"
+      class="mwx text-border flex flex-wrap items-center gap-3 pb-8 font-mono text-sm tracking-wider uppercase"
     >
-      <a href="/productos" class="text-green no-underline">Catálogo de productos</a>
+      <a
+        href="/productos"
+        class="text-muted-dark hover:text-green no-underline transition-colors"
+        >Catálogo de productos</a
+      >
       <span>/</span>
       <a
         href={`/productos?category=${category.slug}`}
-        class="text-green no-underline"
+        class="text-muted-dark hover:text-green no-underline transition-colors"
       >
         {category.name}
       </a>
       <span>/</span>
-      <span class="text-muted truncate">{entry.id}</span>
+      <span class="truncate text-black">{entry.id}</span>
     </nav>
 
-    <section class="mwx flex flex-col gap-8 pb-24 md:flex-row md:gap-12 md:pb-32 lg:gap-24">
+    <section
+      class="mwx flex flex-col gap-8 pb-24 md:flex-row md:gap-12 md:pb-32 lg:gap-24"
+    >
       <div class="md:flex-1">
         <ProductGallery images={images} name={entry.data.name} />
       </div>
@@ -59,7 +69,7 @@ const related = allProducts
           {category.name}
         </p>
         <h1
-          class="text-[36px] leading-none font-semibold tracking-tight text-balance text-black md:text-[48px] lg:text-[64px]"
+          class="text-[36px] leading-none font-medium tracking-tight text-balance text-black md:text-[48px] lg:text-[64px]"
         >
           {entry.data.name}
         </h1>
@@ -78,7 +88,7 @@ const related = allProducts
             href={getProductQuoteUrl(entry.data.name)}
             target="_blank"
             rel="noreferrer noopener"
-            class="btn btn-accent gap-2"
+            class="btn btn-accent"
           >
             Solicitar cotización
             <Arrow />
@@ -89,6 +99,7 @@ const related = allProducts
             rel="noreferrer noopener"
             class="btn btn-secondary"
           >
+            <Download size={16} stroke-width={2.5} />
             Ficha técnica
           </a>
         </div>
@@ -104,7 +115,7 @@ const related = allProducts
             </h2>
             <a
               href={`/productos?category=${category.slug}`}
-              class="btn btn-primary hidden shrink-0 gap-2 sm:flex"
+              class="btn btn-primary hidden shrink-0 sm:flex"
             >
               Ver todos
               <Arrow />

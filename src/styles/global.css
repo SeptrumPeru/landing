@@ -240,7 +240,7 @@
   }
 
   .btn {
-    @apply relative inline-flex items-center justify-center overflow-hidden rounded-full px-7 pt-4.5 pb-4 text-center leading-5 font-medium uppercase no-underline;
+    @apply relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-full px-7 pt-4.5 pb-4 text-center leading-5 font-medium uppercase no-underline;
     transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
