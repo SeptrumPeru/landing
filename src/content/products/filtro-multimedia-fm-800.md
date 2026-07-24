@@ -1,6 +1,6 @@
 ---
 name: "Filtro Multimedia FM-800"
-category: "Filtración"
+category: "Servicios"
 description: "Filtro multimedia para remoción de sólidos y sedimentos en sistemas de agua industrial y de uso humano."
 specs:
   - label: "Material"

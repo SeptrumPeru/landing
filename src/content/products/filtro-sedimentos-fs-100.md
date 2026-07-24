@@ -1,6 +1,6 @@
 ---
 name: "Filtro de Sedimentos FS-100"
-category: "Filtración"
+category: "Servicios"
 description: "Filtro de sedimentos de polipropileno para retención de partículas finas en línea de agua industrial."
 specs:
   - label: "Material"

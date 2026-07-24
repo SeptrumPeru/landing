@@ -1,6 +1,6 @@
 ---
 name: "Caudalímetro Ultrasónico UF-600"
-category: "Medición de Flujo"
+category: "Bombas"
 description: "Caudalímetro ultrasónico no invasivo, ideal para medición de flujo sin cortar la tubería existente."
 specs:
   - label: "Material"
