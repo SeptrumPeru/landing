@@ -14,15 +14,15 @@ export const categories = [
     image: categorySensor,
   },
   {
-    slug: "medicion-de-flujo",
-    name: "Medición de Flujo",
+    slug: "bombas",
+    name: "Bombas",
     description:
       "Caudalímetros y sensores de flujo para control preciso en procesos industriales.",
     image: categoryFlow,
   },
   {
-    slug: "filtracion",
-    name: "Filtración",
+    slug: "servicios",
+    name: "Servicios",
     description:
       "Filtros industriales para sólidos, sedimentos y partículas en sistemas de agua para uso humano e industrial.",
     image: categoryFilter,
