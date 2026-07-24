@@ -3,7 +3,7 @@ import categoryFlow from "../images/categories/category-flow.jpg";
 import categoryFilter from "../images/categories/category-filter.jpg";
 import categoryUv from "../images/categories/category-uv.jpg";
 import categoryValve from "../images/categories/category-valve.jpg";
-import categoryAccessory from "../images/categories/category-accessory.jpg";
+import categoryAccessory from "../images/categories/sello.jpg";
 
 export const categories = [
   {
