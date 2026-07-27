@@ -9,7 +9,4 @@ specs:
     value: "75 W"
   - label: "Dosis UV"
     value: "40 mJ/cm²"
-images:
-  - "../../images/productos/gato.JPG"
-  - "../../images/productos/perro.jpg"
 ---

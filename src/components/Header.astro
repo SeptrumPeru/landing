@@ -17,18 +17,18 @@ const currentPath = Astro.url.pathname;
     class="neumorphic-header rounded-base relative z-30 box-border flex h-17.5 w-full max-w-321 items-center justify-between gap-4 p-3 px-6 md:rounded-full md:px-3"
   >
     <a href="/" class="flex shrink-0 items-center gap-2 no-underline">
-      <span class="hidden leading-none md:inline-flex" aria-hidden="true">
+      <div class="hidden leading-none md:inline-flex" aria-hidden="true">
         <Image
           src={logo}
           alt="Logo de Septrum"
           width={132}
           densities={[1, 2]}
         />
-      </span>
-      <span
-        class="text-[28px] leading-none font-semibold tracking-tight text-white"
-        >SEPTRUM</span
-      >
+      </div>
+      <div class="text-[28px] leading-none font-semibold tracking-tight italic">
+        <span class="text-green">SEP</span>
+        <span class="text-[#7030A0]">TRUM</span>
+      </div>
     </a>
 
     <nav
@@ -40,8 +40,8 @@ const currentPath = Astro.url.pathname;
           <a
             href={item.href}
             class:list={[
-              "text-[#9a9a9a] no-underline transition-colors duration-200 hover:text-white",
-              { "text-white": currentPath === item.href },
+              "text-muted no-underline transition-colors duration-200 hover:text-black",
+              { "text-black!": currentPath === item.href },
             ]}
           >
             {item.label}
@@ -49,12 +49,11 @@ const currentPath = Astro.url.pathname;
         ))
       }
     </nav>
-
     <a
       href={WHATSAPP_URL}
       target="_blank"
       rel="noreferrer noopener"
-      class="btn btn-accent hidden h-full shrink-0 md:flex"
+      class="btn btn-primary hidden h-full shrink-0 md:flex"
     >
       Escríbenos
     </a>
@@ -69,13 +68,13 @@ const currentPath = Astro.url.pathname;
       data-menu-open-btn
     >
       <span
-        class="block h-0.5 w-full bg-white transition-transform duration-300 group-aria-expanded:translate-y-2 group-aria-expanded:-rotate-45"
+        class="block h-0.5 w-full bg-black transition-transform duration-300 group-aria-expanded:translate-y-2 group-aria-expanded:-rotate-45"
       ></span>
       <span
-        class="block h-0.5 w-full bg-white transition-all duration-200 group-aria-expanded:scale-x-200 group-aria-expanded:opacity-0"
+        class="block h-0.5 w-full bg-black transition-all duration-200 group-aria-expanded:scale-x-200 group-aria-expanded:opacity-0"
       ></span>
       <span
-        class="block h-0.5 w-full bg-white transition-transform duration-300 group-aria-expanded:-translate-y-2 group-aria-expanded:rotate-45"
+        class="block h-0.5 w-full bg-black transition-transform duration-300 group-aria-expanded:-translate-y-2 group-aria-expanded:rotate-45"
       ></span>
     </button>
   </div>
@@ -93,7 +92,7 @@ const currentPath = Astro.url.pathname;
     aria-modal="true"
     aria-label="Menú de navegación"
     tabindex="-1"
-    class="site-menu mwx rounded-base fixed top-33.5 right-6 bottom-6 left-6 z-20 flex w-auto flex-col bg-black px-6 py-8 text-white md:top-[calc(16px+70px+16px)] md:right-4 md:bottom-4 md:left-4 md:hidden"
+    class="site-menu mwx rounded-base bg-bg fixed top-33.5 right-6 bottom-6 left-6 z-20 flex w-auto flex-col px-6 py-8 text-black md:top-[calc(16px+70px+16px)] md:right-4 md:bottom-4 md:left-4 md:hidden"
   >
     <nav class="flex flex-col" aria-label="Menú móvil">
       {
@@ -101,7 +100,7 @@ const currentPath = Astro.url.pathname;
           <a
             href={item.href}
             style={{ "--i": i }}
-            class="border-border-dark flex items-center justify-between border-b py-5.5 text-[1.6rem] font-semibold tracking-[0.01em] text-white no-underline first:pt-0 last-of-type:border-b-0"
+            class="border-border flex items-center justify-between border-b py-5.5 text-[1.6rem] font-semibold tracking-[0.01em] text-black no-underline first:pt-0 last-of-type:border-b-0"
             data-menu-link
           >
             <span>{item.label.toUpperCase()}</span>
@@ -121,7 +120,7 @@ const currentPath = Astro.url.pathname;
       target="_blank"
       rel="noreferrer noopener"
       style={{ "--i": navItems.length }}
-      class="btn btn-accent mt-auto h-15 text-xl"
+      class="btn btn-primary mt-auto h-15 text-xl"
       data-menu-link
     >
       Escríbenos
@@ -199,7 +198,7 @@ const currentPath = Astro.url.pathname;
     openBtn?.setAttribute("aria-expanded", "true");
     document.documentElement.style.overflow = "hidden";
     setBackgroundInert(true);
-    playTone({ start: 520, end: 780, duration: 0.13, volume: 0.25 });
+    playTone({ start: 520, end: 780, duration: 0.13, volume: 0.5 });
     // .focus() forces a synchronous style/layout flush. Called on an element
     // inside the very subtree we just changed, it collapses the "before" and
     // "after" frames into one before the browser paints the closed state, so
@@ -217,7 +216,7 @@ const currentPath = Astro.url.pathname;
     openBtn?.setAttribute("aria-expanded", "false");
     document.documentElement.style.overflow = "";
     setBackgroundInert(false);
-    playTone({ start: 640, end: 380, duration: 0.1, volume: 0.25 });
+    playTone({ start: 640, end: 380, duration: 0.1, volume: 0.5 });
     requestAnimationFrame(() => {
       openBtn?.focus();
     });
